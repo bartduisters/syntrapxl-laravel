@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('teaser')->nullable();
             $table->float('price_excl')->nullable();
+            $table->float('price_incl')->nullable();
 
             $table->string('media_url')->nullable();
             $table->boolean('is_business')->default(false);
