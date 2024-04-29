@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('price_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->float('price_excl');
             $table->float('price_incl');
