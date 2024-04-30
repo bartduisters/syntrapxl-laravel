@@ -13,22 +13,22 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('url');
             $table->string('title');
-            $table->string('teaser')->nullable();
+            $table->text('teaser')->nullable();
             $table->float('price_excl')->nullable();
             $table->float('price_incl')->nullable();
 
-            $table->string('media_url')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('is_business')->default(false);
             $table->text('program_text')->nullable();
 
-            $table->foreignId('kmo_theme_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('kmo_theme_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('sector_id')->constrained()->cascadeOnDelete();
             $table->foreignId('course_type_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('duration_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('level_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('study_type_id')->constrained()->cascadeOnDelete();
-
+            $table->foreignId('duration_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('level_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('study_type_id')->nullable()->constrained()->cascadeOnDelete();
 
             $table->text('details_text')->nullable();
             $table->text('details_extra_info')->nullable();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date')->nullable();
             $table->foreignId('day_id')->constrained()->cascadeOnDelete();
             $table->foreignId('location_id')->constrained()->cascadeOnDelete();
-            $table->integer('available_spaces');
+            $table->integer('available_spaces')->nullable();
             $table->timestamps();
         });
     }
