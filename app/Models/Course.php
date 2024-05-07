@@ -30,4 +30,34 @@ class Course extends Model
         'details_for_text',
         'details_requirements_text',
     ];
+
+    public function savings()
+    {
+        return $this->belongsToMany(Saving::class);
+    }
+
+    public function specialProperties()
+    {
+        return $this->belongsToMany(SpecialProperty::class);
+    }
+
+    public function people()
+    {
+        return $this->belongsToMany(Person::class);
+    }
+
+    public function startDates()
+    {
+        return $this->hasMany(StartDate::class);
+    }
+
+    public function businessDevelopers()
+    {
+        return $this->belongsToMany(Person::class)->where('is_business_developer', true);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Person::class)->where('is_teacher', true);
+    }
 }

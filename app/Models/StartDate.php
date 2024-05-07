@@ -16,4 +16,9 @@ class StartDate extends Model
         'location_id',
         'available_spaces'
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
