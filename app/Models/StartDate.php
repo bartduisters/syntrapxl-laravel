@@ -9,14 +9,13 @@ class StartDate extends Model
 {
     use HasFactory;
 
-      protected $fillable = [
-        'date',
+    protected $fillable = [
         'course_id',
-        'day_id',
         'location_id',
-        'available_spaces'
+        'day_id',
+        'date',
+        'available_spaces',
     ];
-
     public function course()
     {
         return $this->belongsTo(Course::class);

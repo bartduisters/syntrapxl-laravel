@@ -10,11 +10,13 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
+        'url',
         'title',
         'teaser',
         'price_excl',
-
-        'media_url',
+        'price_incl',
+        // should_show_your_locations
+        'image',
         'is_business',
         'program_text',
 
@@ -41,16 +43,50 @@ class Course extends Model
         return $this->belongsToMany(SpecialProperty::class);
     }
 
+    public function priceDetails()
+    {
+        return $this->hasMany(PriceDetail::class);
+    }
+
     public function people()
     {
-        return $this->belongsToMany(Person::class);
+        return $this->belongsToMany(Person::class, 'course_person');
+    }
+
+    public function kmoTheme()
+    {
+        return $this->belongsTo(KmoTheme::class);
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class);
+    }
+
+    public function courseType()
+    {
+        return $this->belongsTo(CourseType::class);
+    }
+
+    public function duration()
+    {
+        return $this->belongsTo(Duration::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    public function studyType()
+    {
+        return $this->belongsTo(StudyType::class);
     }
 
     public function startDates()
     {
         return $this->hasMany(StartDate::class);
     }
-
     public function businessDevelopers()
     {
         return $this->belongsToMany(Person::class)->where('is_business_developer', true);
