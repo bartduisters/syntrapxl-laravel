@@ -149,7 +149,7 @@ class CourseController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return compact(
+        return view('courses.index', compact(
             'courses',
             'sectors',
             'start_dates',
@@ -160,7 +160,7 @@ class CourseController extends Controller
             'special_properties',
             'levels',
             'study_types',
-        );
+        ));
     }
 
     /**
