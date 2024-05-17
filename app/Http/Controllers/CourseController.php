@@ -145,7 +145,7 @@ class CourseController extends Controller
 
         $filtered_course_ids = $filtered_courses->pluck('id');
         $courses = Course::whereIn('id', $filtered_course_ids)
-            ->with('savings', 'specialProperties', 'priceDetails', 'people', 'kmoTheme', 'sector', 'courseType', 'duration', 'level', 'studyType')
+            ->with('savings', 'specialProperties', 'priceDetails', 'people', 'kmoTheme', 'sector', 'courseType', 'duration', 'level', 'studyType', 'startDates', 'startDates.location')
             ->paginate(10)
             ->withQueryString();
 

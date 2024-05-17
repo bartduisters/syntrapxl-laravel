@@ -20,4 +20,9 @@ class StartDate extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }
