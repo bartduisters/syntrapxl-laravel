@@ -149,6 +149,22 @@ class CourseController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        foreach ($courses as $course) {
+            $course->has_kmo = $course->savings->contains('name', 'kmo');
+            $course->has_cheques = $course->savings->contains('name', 'cheques');
+            $course->has_location = $course->startDates->count() > 0;
+            
+            $course->is_new = $course->specialProperties->contains('name', 'Nieuw');
+            $course->is_knelpuntberoep = $course->specialProperties->contains('name', 'Knelpuntberoep');
+
+            $course->has_location = $course->startDates->count() > 0;
+            
+            $unique_start_date_locations = $course->startDates->unique('location_id');
+            $course->locations_string = $unique_start_date_locations->map(function ($location) {
+                return $location->location->name;
+            })->implode(', ');
+        }
+
         return view('courses.index', compact(
             'courses',
             'sectors',

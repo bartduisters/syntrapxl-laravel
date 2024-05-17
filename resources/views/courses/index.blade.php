@@ -15,24 +15,15 @@
             </div>
             <div class="flex flex-col gap-4">
                 @foreach ($courses as $course)
-                    <?php
-                    $has_kmo = $course->savings->contains('name', 'kmo');
-                    $has_cheques = $course->savings->contains('name', 'cheques');
-                    $has_location = $course->startDates->count() > 0;
-                    $unique_start_date_locations = $course->startDates->unique('location_id');
-                    
-                    $is_new = $course->specialProperties->contains('name', 'Nieuw');
-                    $is_knelpuntberoep = $course->specialProperties->contains('name', 'Knelpuntberoep');
-                    ?>
                     <div
                         class="border border-gray-200 dark:border-gray-700 pt-[28px] pb-[60px] pl-[72px] bg-white dark:bg-gray-800 relative">
-                        @if ($is_new)
+                        @if ($course->is_new)
                             <span
                                 style="background-image: url('https://www.syntrapxl.be/themes/custom/sassy/images/new.png');"
                                 class="absolute top-[-1px] right-[-1px] w-[47px] h-[47px] bg-cover">
                             </span>
                         @endif
-                        @if ($is_knelpuntberoep)
+                        @if ($course->is_knelpuntberoep)
                             <span
                                 style="background-image: url('https://www.syntrapxl.be/themes/custom/sassy/images/bottleneck.png');"
                                 class="absolute top-[-1px] right-[-1px] w-[97px] h-[97px] bg-cover">
@@ -61,7 +52,7 @@
                             <div class="md:w-[31%] flex flex-col">
                                 <div class="flex items-center gap-4">
                                     <span class="w-[16px]">
-                                        @if ($has_kmo)
+                                        @if ($course->has_kmo)
                                             <x-icons.check class="block w-4 h-4" />
                                         @else
                                             <x-icons.close class="block w-[10px] h-[10px] ml-[3px]" />
@@ -70,25 +61,20 @@
                                 </div>
                                 <div class="flex items-center gap-4">
                                     <span class="w-[16px]">
-                                        @if ($has_cheques)
+                                        @if ($course->has_cheques)
                                             <x-icons.check class="block w-4 h-4" />
                                         @else
                                             <x-icons.close class="block w-[10px] h-[10px] ml-[3px]" />
                                         @endif
                                     </span> <span>Opleidingscheques</span>
                                 </div>
-                                @if ($has_location)
+                                @if ($course->has_location)
                                     <div class="flex items-center gap-4 mt-4">
                                         <span class="w-[16px]">
                                             <x-icons.location class="block w-4 h-4" />
                                         </span>
                                         <div class="flex flex-wrap">
-                                            @foreach ($unique_start_date_locations as $key => $start_date)
-                                                <span>{{ $start_date->location->name }}</span>
-                                                @if ($key < count($unique_start_date_locations) - 1)
-                                                    ,&nbsp;
-                                                @endif
-                                            @endforeach
+                                            <span>{{ $course->locations_string }}</span>
                                         </div>
                                     </div>
                                 @endif
