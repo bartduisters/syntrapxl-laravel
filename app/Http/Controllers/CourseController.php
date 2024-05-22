@@ -153,12 +153,12 @@ class CourseController extends Controller
             $course->has_kmo = $course->savings->contains('name', 'kmo');
             $course->has_cheques = $course->savings->contains('name', 'cheques');
             $course->has_location = $course->startDates->count() > 0;
-            
+
             $course->is_new = $course->specialProperties->contains('name', 'Nieuw');
             $course->is_knelpuntberoep = $course->specialProperties->contains('name', 'Knelpuntberoep');
 
             $course->has_location = $course->startDates->count() > 0;
-            
+
             $unique_start_date_locations = $course->startDates->unique('location_id');
             $course->locations_string = $unique_start_date_locations->map(function ($location) {
                 return $location->location->name;
@@ -200,7 +200,13 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        $course->load('savings', 'specialProperties', 'priceDetails', 'people', 'kmoTheme', 'sector', 'courseType', 'duration', 'level', 'studyType', 'startDates', 'startDates.location', 'startDates.day');
+
+        $course->startDates->each(function ($start_date) {
+            $start_date->formatted_date = $start_date->formattedDate();
+        });
+
+        return view('courses.show', compact('course'));
     }
 
     /**
