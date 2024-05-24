@@ -10,6 +10,16 @@
                     </a>
                 </div>
 
+                <div class="flex items-center h-full ml-4">
+                    <form action="{{ route('opleidingen.index') }}" method="get">
+                        <x-text-input placeholder="Vind je opleiding" 
+                            name="search" 
+                            class="w-full h-10 px-4 text-sm text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-700 focus:outline-none focus:ring focus:ring-syntra focus:ring-opacity-50" 
+                            value="{{ request()->query('search') }}"
+                        />
+                    </form>
+                </div>
+
                 <!-- Navigation Links -->
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -19,10 +29,10 @@
             </div>
 
             <div class="hidden sm:flex">
-                <div class="w-40 bg-gray-100 dark:bg-gray-700"></div>
+                {{-- <div class="w-40 bg-gray-100 dark:bg-gray-700"></div>
                 <div class="w-40 bg-syntra"></div>
                 <div class="w-20 bg-syntra"></div>
-                <div class="w-40 bg-syntra"></div>
+                <div class="w-40 bg-syntra"></div> --}}
             </div>
 
         </div>

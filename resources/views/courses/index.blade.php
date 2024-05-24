@@ -17,26 +17,6 @@
         <div class="w-full min-h-screen p-5 text-gray-900 bg-white max-w-80 dark:bg-gray-800 dark:text-gray-100">
             <form id="filterForm" action="" class="flex flex-col gap-4">
                 <div>
-                    <h2 class="text-xl font-bold">Sector</h2>
-                    <?php
-                    $selectedSectors = request()->input('sectors', []);
-                    $sectors = $sectors->sortBy('name');
-                    ?>
-
-                    @foreach ($sectors as $sector)
-                        <label for="sector-{{ $sector->id }}">
-                            <span>
-                                <input type="checkbox" name="sectors[]" id="sector-{{ $sector->id }}"
-                                    value="{{ $sector->id }}"
-                                    {{ in_array($sector->id, $selectedSectors) ? 'checked' : '' }}
-                                    onchange="document.getElementById('filterForm').submit()">
-                                {{ $sector->name }}</span>
-                            <span>{{ $sector->courses_count }}</span>
-                        </label>
-                    @endforeach
-                </div>
-
-                <div>
                     <h2 class="text-xl font-bold">Startdatum</h2>
                     <?php
                     $selectedStartDates = request()->input('start_dates', []);
@@ -192,19 +172,41 @@
                     @endforeach
                 </div>
 
+                <div>
+                    <h2 class="text-xl font-bold">Sector</h2>
+                    <?php
+                    $selectedSectors = request()->input('sectors', []);
+                    $sectors = $sectors->sortBy('name');
+                    ?>
+
+                    @foreach ($sectors as $sector)
+                        <label for="sector-{{ $sector->id }}">
+                            <span>
+                                <input type="checkbox" name="sectors[]" id="sector-{{ $sector->id }}"
+                                    value="{{ $sector->id }}"
+                                    {{ in_array($sector->id, $selectedSectors) ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit()">
+                                {{ $sector->name }}</span>
+                            <span>{{ $sector->courses_count }}</span>
+                        </label>
+                    @endforeach
+                </div>
             </form>
         </div>
 
         <div class="text-gray-900 dark:text-gray-100 md:px-[8.3%]">
 
             <div class="my-11">
-
                 <span class="text-xl font-bold"> {{ $courses->total() }} </span>
-                opleidingen gevonden
+                {{ $courses->total() == 1 ? 'opleiding gevonden' : 'opleidingen gevonden' }}
             </div>
             <div class="flex flex-col gap-4">
                 @foreach ($courses as $course)
-                    <x-course.card :course="$course" />
+                    <form action="{{ route('opleidingen.show', $course) }}" method="get">
+                        <button type="submit" class="text-left">
+                            <x-course.card :course="$course" />
+                        </button>
+                    </form>
                 @endforeach
             </div>
 

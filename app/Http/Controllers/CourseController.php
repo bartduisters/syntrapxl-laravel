@@ -10,10 +10,11 @@ use App\Models\Sector;
 use App\Models\Duration;
 use App\Models\Location;
 use App\Models\StartDate;
+use App\Models\StudyType;
 use App\Models\CourseType;
 use Illuminate\Http\Request;
 use App\Models\SpecialProperty;
-use App\Models\StudyType;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -23,6 +24,13 @@ class CourseController extends Controller
     public function index()
     {
         $filtered_courses = Course::all();
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $filtered_courses = $filtered_courses->filter(function ($course) use ($search) {
+                return stripos($course['title'], $search) !== false || stripos($course['teaser'], $search) !== false;
+            });
+        }
 
         if (request()->has('sectors')) {
             $filter_sector_ids = request()->input('sectors');
