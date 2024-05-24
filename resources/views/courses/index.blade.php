@@ -203,7 +203,7 @@
             <div class="flex flex-col gap-4">
                 @foreach ($courses as $course)
                     <form action="{{ route('opleidingen.show', $course) }}" method="get">
-                        <button type="submit" class="text-left">
+                        <button type="submit" class="w-full text-left max-w-[1200px]">
                             <x-course.card :course="$course" />
                         </button>
                     </form>
