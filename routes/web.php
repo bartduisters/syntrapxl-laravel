@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return redirect('/opleidingen');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
